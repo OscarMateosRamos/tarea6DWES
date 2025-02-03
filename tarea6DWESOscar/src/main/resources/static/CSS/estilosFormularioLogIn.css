@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url(../Imagenes/shrubs-4813685_1280.jpg);
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center; 
+    margin: 0;
+}
+
+/* Contenedor principal */
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.8);  /* Fondo blanco translúcido */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Estilos de los campos de entrada */
+input {
+    display: block;
+    margin: 10px auto;
+    padding: 12px;
+    width: 80%; /* Aumenta el ancho de los inputs */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Estilo para el botón */
+button {
+    background-color: black;
+    color: white;
+    padding: 15px; /* Aumenta el padding para hacerlo más alto */
+    border: none;
+    cursor: pointer;
+    margin: 20px auto; /* Ajusta el margen para que esté más centrado */
+    width: 90%;  /* Hace que el botón ocupe el 80% del ancho del contenedor */
+    border-radius: 5px;
+    font-size: 18px;  /* Aumenta el tamaño del texto del botón */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Efecto hover para el botón */
+button:hover {
+    background-color: #444; /* Fondo gris oscuro al pasar el cursor */
+    transform: scale(1.05); /* Agranda ligeramente el botón */
+}
+
+/* Estilo para el título */
+h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
