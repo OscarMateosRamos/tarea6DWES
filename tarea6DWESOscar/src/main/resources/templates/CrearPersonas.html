@@ -12,18 +12,22 @@
       </header>
   
       <div class="container">
-        <form class="formulario">
+        <form class="formulario" th:action="@{/CrearPersona}" th:object="${persona}" method="post">
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="nombre" required />
+          <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required />
   
           <label for="email">Email:</label>
-          <input type="text" id="email" name="email" required />
+          <input type="text" id="email" name="email" th:field="*{email}" required />
   
-          <label for="credenciales">Credenciales:</label>
-          <input type="text" id="credenciales" name="credenciales" required />
-  
-          <button type="submit" class="boton">Crear Persona</button>
-        </form>
+		 <label for="usuario">Usuario:</label>
+          <input type="text" id="usuario" name="usuario" th:field="*{credencial.usuario}" required />
+          
+          <label for="password" >Password:</label>
+          <input type="text" id="password" name="password" th:field="*{credencial.password}" required />
+      		
+      		<button type="submit" class="boton">Crear Persona</button>
+  		</form>
+  		 
         <br>
         <div class="contenedor-boton">
             <a href="/GestiondePersonas" class="boton"> Volver a Gestion de Personas</a>

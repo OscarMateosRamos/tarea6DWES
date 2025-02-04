@@ -39,7 +39,7 @@ public class Persona {
 	private Credenciales credencial;
 
 	public Persona() {
-
+		credencial = new Credenciales();
 	}
 
 	public Persona(Long id, String nombre, String email, Credenciales credencial) {

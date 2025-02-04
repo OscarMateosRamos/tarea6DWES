@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oscar.vivero.modelo.Credenciales;
 import com.oscar.vivero.modelo.Persona;
@@ -27,34 +28,48 @@ public class PersonaController {
 		return "listadodePersonas";
 	}
 
-	@PostMapping("/CamposPlanta")
-	public String InsertarPersona(@ModelAttribute Persona CrearPersonas, Model model) {
+	@PostMapping("/CrearPersona")
+	public String InsertarPersona(@RequestParam String nombre, @RequestParam String email, @RequestParam String usuario,
+			@RequestParam String password, Model model) {
+//	public String InsertarPersona(@RequestParam String nombre, @RequestParam String email, Model model) {
 
 		Persona p = new Persona();
-
-		String nombre = CrearPersonas.getNombre();
-		String email = CrearPersonas.getEmail();
-		Credenciales Credenciales = CrearPersonas.getCredencial();
-
-		// Comprobar que exitse la Credencial que se inserta
-		boolean existeCred = servCredenciales.existeCredencial(nombre);
-
 		p.setNombre(nombre);
 		p.setEmail(email);
-		p.setCredencial(Credenciales);
-		boolean camposValidos = servPersona.validarPersona(nombre, email);
+		//Persona per = (Persona) model.getAttribute("persona");
 
-		if (!camposValidos) {
-			model.addAttribute("error", " campos de la Planta Invalidos.");
+		Credenciales c = new Credenciales();
+		c.setUsuario(usuario); //per.getCredencial().getUsuario());
+		c.setPassword(password); //per.getCredencial().getPassword());
+
+		boolean existeCred = servCredenciales.existeCredencial(c.getUsuario());
+		if (existeCred) {
+			model.addAttribute("error", "Ya existe un Usuario con esa Credencial");
 			return "CrearPersonas";
 		}
 
+
+		boolean credValidas = servCredenciales.validarUsuarioPassword(c);
+		if (!credValidas) {
+			model.addAttribute("error", "Credenciales para la persona invalidas.");
+			return "CrearPersonas";
+		}
+		boolean camposValidos = servPersona.validarPersona(nombre, email);
+		if (!camposValidos) {
+			model.addAttribute("error", "Campos de la persona inválidos.");
+
+			model.addAttribute("persona", new Persona());
+			return "CrearPersonas";
+		}
+		servCredenciales.insertarCredencial(c);
+
+		p.setCredencial(c);
 		servPersona.insertarPersona(p);
 
 		return "/CrearPersonas";
 	}
 
-	@GetMapping("/CrearPersonas")
+	@GetMapping("/mostrarCrearPersonas")
 	public String mostrarFormulario(Model model) {
 		model.addAttribute("persona", new Persona());
 		return "CrearPersonas";
