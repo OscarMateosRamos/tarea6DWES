@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class GestiondeEjemplaresController {
-
 	@GetMapping({ "/MenuAdmin", "GestiondeEjemplares" })
 	public String GestiondeEjemplares() {
 		return "GestiondeEjemplares";
