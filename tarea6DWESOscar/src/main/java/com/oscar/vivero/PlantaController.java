@@ -1,10 +1,13 @@
 package com.oscar.vivero;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.oscar.vivero.modelo.Planta;
@@ -17,7 +20,8 @@ public class PlantaController {
 
 	@GetMapping("/plantas")
 	public String listarPlantas(Model model) {
-		model.addAttribute("plantas", servPlanta.vertodasPlantas());
+		List<Planta> plantas = servPlanta.vertodasPlantas();
+		model.addAttribute("plantas", plantas);
 		return "listadodePlantas";
 	}
 
@@ -46,14 +50,59 @@ public class PlantaController {
 		}
 
 		servPlanta.insertarPlanta(p);
-	
+
 		return "/CrearPlantas";
 	}
 
+	@PostMapping("/CamposModificarPlanta/{id}")
+	public String ModificarPlanta(@PathVariable Long id, @ModelAttribute Planta ModificarPlanta, Model model) {
+		Planta existePlanta = servPlanta.buscarPlantaPorId(id);
+
+		if (existePlanta == null) {
+			model.addAttribute("error", "Planta no encontrada.");
+			return "ModificarPlantas";
+		}
+
+		existePlanta.setCodigo(ModificarPlanta.getCodigo());
+		existePlanta.setNombrecomun(ModificarPlanta.getNombrecomun());
+		existePlanta.setNombrecientifico(ModificarPlanta.getNombrecientifico());
+
+		boolean credValidas = servPlanta.validarPlanta(existePlanta);
+		if (!credValidas) {
+			model.addAttribute("error", "Campos de la Planta inválidos.");
+			return "ModificarPlantas";
+		}
+
+		servPlanta.modificarPlanta(existePlanta);
+		model.addAttribute(" exito", "Planta modificada correctamente.");
+		return "redirect:/plantas";
+	}
+
 	@GetMapping("/CrearPlantas")
-	public String mostrarFormulario(Model model) {
+	public String mostrarCrearPlantaFormulario(Model model) {
 		model.addAttribute("planta", new Planta());
 		return "CrearPlantas";
+	}
+
+	@GetMapping("/ModificarPlantas")
+	public String mostrarCrearModificarPlantasFormulario(Model model) {
+		List<Planta> plantas = servPlanta.vertodasPlantas();
+		model.addAttribute("plantas", plantas);
+		return "ModificarPlanta";
+	}
+
+	@GetMapping("/formularioModificarPlanta/{id}")
+	public String mostrarFormularioModificarPlanta(@PathVariable Long id, Model model) {
+
+		Planta p = servPlanta.buscarPlantaPorId(id);
+
+		if (p == null) {
+			model.addAttribute("error", "Planta no encontrada");
+			return "ModificarPlanta";
+		}
+
+		model.addAttribute("planta", p);
+		return "formularioModificarPlanta";
 	}
 
 }

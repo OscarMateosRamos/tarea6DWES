@@ -53,6 +53,10 @@ public class ServiciosPlanta {
 		return plantas;
 	}
 
+	public Planta buscarPlantaPorId(Long id) {
+		return plantarepo.findById(id).orElse(null);
+	}
+
 	public boolean existeCodigoPlanta(String codigo) {
 		List<Planta> plantas = plantarepo.findAll();
 
@@ -88,4 +92,5 @@ public class ServiciosPlanta {
 
 		return pl;
 	}
+
 }

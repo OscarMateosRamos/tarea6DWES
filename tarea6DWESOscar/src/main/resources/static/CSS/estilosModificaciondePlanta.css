@@ -1,4 +1,3 @@
-
 html, body {
     height: 100%;
     margin: 0; 
@@ -12,16 +11,15 @@ body {
     align-items: center;
     justify-content: flex-start;
     background-color: #f4f4f4;
-    background-image: url(../Imagenes/crocus-2107024_1280.jpg);
+    background-image: url(./Imagenes/crocus-2107024_1280.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 100vh;
 }
 
-
 header {
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.8);
     color: white;
     text-align: center;
     padding: 20px;
@@ -31,17 +29,28 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    z-index: 10;
 }
 
+.container {
+    margin-top: 100px;
+    width: 90%; 
+    text-align: center;
+    overflow-x: auto; 
+}
 
 table {
-    width: 80%;
-    margin: 20px auto;
+    width: 100%;
+    margin: 20px 0;
     border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; 
+    overflow: hidden; 
 }
 
 thead {
-    background-color: black;
+    background-color: #333;
 }
 
 th {
@@ -55,41 +64,58 @@ td {
     padding: 12px;
     text-align: left;
     border: 1px solid #ddd;
-    background-color: white;
-    color: red;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-
-.container {
-    text-align: center;
-    margin: 20px;
-    margin-top: 200px;
+tr:hover {
+    background-color: #e9e9e9; 
 }
-
 
 .boton-container {
-    margin-bottom: 20px; 
-    text-align: center;  
+    margin-top: 20px;
+    text-align: center;
 }
-
 
 .boton {
     display: inline-block;
     padding: 10px 20px;
-    background-color: black;
+    background-color: #333;
     color: white;
     text-decoration: none;
     font-size: 16px;
     text-align: center;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
+    margin: 10px;
 }
 
 .boton:hover {
     background-color: #444;
     transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    header {
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .container {
+        margin-top: 120px;
+        width: 95%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .boton {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
 }

@@ -15,5 +15,6 @@ public interface PlantaRepository extends JpaRepository<Planta, Long> {
 	List<Planta> findByCodigo(String codigo);
 
 	boolean existsByCodigo(String codigo);
-
+	
+	
 }
