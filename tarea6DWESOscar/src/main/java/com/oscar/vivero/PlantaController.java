@@ -1,7 +1,5 @@
 package com.oscar.vivero;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +26,18 @@ public class PlantaController {
 
 		Planta p = new Planta();
 
-		String codigo = CrearPlanta.getCodigo(); //
+		String codigo = CrearPlanta.getCodigo();
 		String nombreComun = CrearPlanta.getNombrecomun();
 		String nombreCientifico = CrearPlanta.getNombrecientifico();
 
 		if (CrearPlanta.getCodigo() == null || CrearPlanta.getCodigo().isEmpty()) {
 			model.addAttribute("error", "El código de la planta es obligatorio.");
-			return "CrearPlantas"; 
+			return "CrearPlantas";
 		}
-		p = servPlanta.buscarPlantaPorCodigo(codigo);
 
+		p.setCodigo(codigo);
+		p.setNombrecomun(nombreComun);
+		p.setNombrecientifico(nombreCientifico);
 		boolean credValidas = servPlanta.validarPlanta(p);
 
 		if (!credValidas) {
@@ -45,9 +45,9 @@ public class PlantaController {
 			return "CrearPlantas";
 		}
 
-		servPlanta.insertarPlanta(CrearPlanta);
-
-		return "listadodePlantas";
+		servPlanta.insertarPlanta(p);
+	
+		return "/CrearPlantas";
 	}
 
 	@GetMapping("/CrearPlantas")
