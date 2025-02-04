@@ -9,7 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centrado vertical y horizontal */
+    justify-content: center; 
     background-color: #f4f4f4;
     background-image: url(../Imagenes/crocus-2107024_1280.jpg);
     background-repeat: no-repeat;
@@ -35,13 +35,13 @@ header {
     text-align: center;
     margin-top: 150px;
     width: 60%;
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    background-color: rgba(255, 255, 255, 0.8); 
     padding: 30px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centrado de los campos */
-    justify-content: center; /* Centrado de los campos */
+    align-items: center; 
+    justify-content: center; 
 }
 
 .formulario {
@@ -49,7 +49,7 @@ header {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    width: 100%; /* Se asegura de que el formulario ocupe todo el espacio disponible */
+    width: 100%; 
 }
 
 label {
@@ -58,7 +58,7 @@ label {
 }
 
 input[type="text"] {
-    width: 80%; /* Limita el ancho de los campos de entrada */
+    width: 80%; 
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
@@ -83,3 +83,32 @@ input[type="text"] {
     background-color: #444;
     transform: scale(1.05);
 }
+
+
+
+.contenedor-boton {
+    display: flex;  
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;  
+    background-color: transparent; 
+}
+
+
+.boton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: black;  
+    color: white;  
+    text-decoration: none;  
+    font-size: 16px;  
+    text-align: center;
+    border-radius: 5px; 
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.boton:hover {
+    background-color: #444;  
+    transform: scale(1.05);   
+}
+
