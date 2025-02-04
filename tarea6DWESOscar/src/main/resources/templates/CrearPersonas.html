@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/estilosCreacionPersona.css">
+    <title>Crear Persona</title>
+</head>
+<body>
+    <header>
+        <h1> Creación de Persona</h1>
+      </header>
+  
+      <div class="container">
+        <form class="formulario">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required />
+  
+          <label for="email">Email:</label>
+          <input type="text" id="email" name="email" required />
+  
+          <label for="credenciales">Credenciales:</label>
+          <input type="text" id="credenciales" name="credenciales" required />
+  
+          <button type="submit" class="boton">Crear Persona</button>
+        </form>
+        <br>
+        <div class="contenedor-boton">
+            <a href="/GestiondePersonas" class="boton"> Volver a Gestion de Personas</a>
+        </div>
+      </div>
+</body>
+</html>
