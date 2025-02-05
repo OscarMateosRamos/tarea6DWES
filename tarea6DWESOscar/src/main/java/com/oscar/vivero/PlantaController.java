@@ -20,8 +20,8 @@ public class PlantaController {
 
 	@GetMapping("/plantas")
 	public String listarPlantas(Model model) {
-		List<Planta> plantas = servPlanta.vertodasPlantas();
-		model.addAttribute("plantas", plantas);
+		List<Planta> p = servPlanta.vertodasPlantas();
+		model.addAttribute("plantas", p);
 		return "listadodePlantas";
 	}
 
@@ -86,8 +86,8 @@ public class PlantaController {
 
 	@GetMapping("/ModificarPlantas")
 	public String mostrarCrearModificarPlantasFormulario(Model model) {
-		List<Planta> plantas = servPlanta.vertodasPlantas();
-		model.addAttribute("plantas", plantas);
+		List<Planta> p = servPlanta.vertodasPlantas();
+		model.addAttribute("plantas", p);
 		return "ModificarPlanta";
 	}
 

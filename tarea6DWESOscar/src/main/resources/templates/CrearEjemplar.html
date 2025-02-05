@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/estilosCreacionPlantas.css">
+    <title>Crear Ejemplar</title>
+</head>
+<body>
+    <header>
+        <h1> Creación de  Ejemplar</h1>
+      </header>
+  
+      <div class="container">
+        <form class="formulario"  th:action="@{/CamposEjemplar}" th:object="${ejemplar}" method="post">
+          <label for="codigo">Codigo de Planta:</label>
+          <input type="text" id="codigo" name="codigo" th:field="*{planta.codigo}" required />
+                              
+          <button type="submit" class="boton">Crear Ejemplar</button>
+        </form>
+        <br>
+        <div class="contenedor-boton">
+            <a href="/MenuAdmin" class="boton"> Volver a Gestion de  GestiondeEjemplares</a>
+        </div>
+      </div>
+</body>
+</html>
