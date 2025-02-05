@@ -101,4 +101,12 @@ public class ServiciosEjemplar {
 		return ejemplares;
 	}
 
+	// Si el ejemplar existe se devulve si no se devulve NULL
+	public Ejemplar buscarPorId(long id) {
+
+		Optional<Ejemplar> ejemplarOptional = ejemplarrepo.findById(id);
+
+		return ejemplarOptional.orElse(null);
+	}
+
 }

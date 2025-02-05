@@ -15,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "ejemplares")
 public class Ejemplar implements Serializable {
@@ -49,7 +48,10 @@ public class Ejemplar implements Serializable {
 	}
 
 	public long getId() {
-		return id;
+		if (this.id == null) {
+			return 0;
+		}
+		return id.longValue();
 	}
 
 	public void setId(Long id) {

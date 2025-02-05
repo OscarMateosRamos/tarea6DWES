@@ -14,13 +14,13 @@
       <div class="container">
         <form class="formulario"  th:action="@{/CamposEjemplar}" th:object="${ejemplar}" method="post">
           <label for="codigo">Codigo de Planta:</label>
-          <input type="text" id="codigo" name="codigo" th:field="*{planta.codigo}" required />
+          <input type="text" id="codigo" name="codigo" th:field="*{ejemplar.nombre}" required />
                               
           <button type="submit" class="boton">Crear Ejemplar</button>
         </form>
         <br>
         <div class="contenedor-boton">
-            <a href="/MenuAdmin" class="boton"> Volver a Gestion de  GestiondeEjemplares</a>
+            <a href="/GestionEjemplaresMenuAdmin" class="boton"> Volver a Gestion de  GestiondeEjemplares</a>
         </div>
       </div>
 </body>

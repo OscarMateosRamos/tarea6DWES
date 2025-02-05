@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "mensajes")
 public class Mensaje {
@@ -39,8 +38,6 @@ public class Mensaje {
 
 	}
 
-	
-
 	public Mensaje(Long id, Date fechahora, String mensaje, Ejemplar ejemplar, Persona persona) {
 		super();
 		this.id = id;
@@ -50,65 +47,46 @@ public class Mensaje {
 		this.persona = persona;
 	}
 
-	
-	
 	public Long getId() {
 		return id;
 	}
-
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-
 	public Date getFechahora() {
 		return fechahora;
 	}
-
-
 
 	public void setFechahora(Date fechahora) {
 		this.fechahora = fechahora;
 	}
 
-
-
 	public String getMensaje() {
 		return mensaje;
 	}
-
-
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
 
-
-
 	public Ejemplar getEjemplar() {
 		return ejemplar;
 	}
-
-
 
 	public void setEjemplar(Ejemplar ejemplar) {
 		this.ejemplar = ejemplar;
 	}
 
-
 	public Persona getPersona() {
 		return persona;
 	}
-
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(ejemplar, fechahora, id, mensaje, persona);
@@ -127,7 +105,6 @@ public class Mensaje {
 				&& Objects.equals(id, other.id) && Objects.equals(mensaje, other.mensaje)
 				&& Objects.equals(persona, other.persona);
 	}
-
 
 	@Override
 	public String toString() {

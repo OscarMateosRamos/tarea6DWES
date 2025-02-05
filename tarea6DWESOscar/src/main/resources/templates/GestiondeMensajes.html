@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Mensajes</title>
-    <link rel="stylesheet" href="./CSS/estilosGestiondeMensajes.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Gestión de Mensajes</h1>
-    </header>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gestión de Mensajes</title>
+<link rel="stylesheet" href="./CSS/estilosGestiondeMensajes.css" />
+</head>
+<body>
+	<header>
+		<h1>Gestión de Mensajes</h1>
+	</header>
 
-    <div class="menu-container">
-      <ul class="menu">
-        <li><a href="#">Crear Mensajes</a></li>
-        <li><a href="#">Ver todos los mensajes (sin filtrar)</a></li>
-        <li><a href="#">Ver mensajes (Filtrados)</a></li>
-        <li><a  th:href="@{/GestionMensajesMenuAdmin}">Salir</a></li>
-      </ul>
-    </div>
-  </body>
+	<div class="menu-container">
+		<ul class="menu">
+			<li><a th:href="@{/CrearMensajes}">Crear Mensajes</a></li>
+			<li><a href="#">Ver todos los mensajes (sin filtrar)</a></li>
+			<li><a href="#">Ver mensajes (Filtrados)</a></li>
+			<li><a th:href="@{/GestionMensajesMenuAdmin}">Salir</a></li>
+		</ul>
+	</div>
+</body>
 </html>
