@@ -10,5 +10,9 @@ public class GestiondeMensajesController {
 		return "GestiondeMensajes";
 
 	}
-
+	
+	@GetMapping("/GestionMensajesMenuAdmin")  
+	public String mostrarMenuAdmin() {
+	    return "MenuAdmin";
+	}
 }
