@@ -14,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "personas")
 
@@ -31,7 +30,7 @@ public class Persona {
 	@Column(name = "email")
 	private String email;
 
-	@OneToMany( mappedBy="persona", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
 	private List<Mensaje> mensajes;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -39,7 +38,7 @@ public class Persona {
 	private Credenciales credencial;
 
 	public Persona() {
-		credencial = new Credenciales();
+
 	}
 
 	public Persona(Long id, String nombre, String email, Credenciales credencial) {

@@ -80,4 +80,10 @@ public class ServiciosCredenciales {
 		return cr;
 	}
 
+	public List<Credenciales> verCredenciales() {
+		List<Credenciales> credenciales = credencialrepo.findAll();
+
+		return credenciales;
+	}
+
 }
