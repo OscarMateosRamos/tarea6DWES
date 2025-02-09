@@ -92,4 +92,16 @@ public class ServiciosPersona {
 		}
 		return false;
 	}
+
+	public boolean existeNombrePersona(String nombre) {
+		List<Persona> personas = personarepo.findAll();
+
+		for (Persona p : personas) {
+			if (p.getNombre().equals(nombre)) {
+
+				return true;
+			}
+		}
+		return false;
+	}
 }
