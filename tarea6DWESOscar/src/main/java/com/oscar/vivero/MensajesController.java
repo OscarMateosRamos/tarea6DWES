@@ -1,5 +1,6 @@
 package com.oscar.vivero;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -35,32 +36,46 @@ public class MensajesController {
 
 	@PostMapping("/CamposMensaje")
 	public String InsertarMensaje(@ModelAttribute Mensaje CrearMensaje, Model model) {
-		Mensaje m = new Mensaje();
-
-		java.sql.Date fechahora = java.sql.Date.valueOf(LocalDate.now());
+		Date fechahora = CrearMensaje.getFechahora();
 		String mensaje = CrearMensaje.getMensaje();
+		Long idEjemplar = CrearMensaje.getEjemplar().getId();
 
-		Long ejemplarId = CrearMensaje.getEjemplar().getId();
-
-		if (ejemplarId == null || ejemplarId == 0) {
-			model.addAttribute("error", "No has seleccionado un Ejemplar o el ID es inválido.");
+		if (!servEjemplar.existeNombreEjemplar(mensaje)) {
+			model.addAttribute("error", "El nombre de ejemplar introducido no existe.");
 			return "CrearMensaje";
+		} else {
+			boolean existeidEjemplar = servEjemplar.existeIdEjemplar(idEjemplar);
+
+			if (!existeidEjemplar) {
+				model.addAttribute("error", "El id de ejemplar introducido no existe ");
+				return "CrearMensaje";
+			} else {
+
+				boolean PersonaMensaje = servPersona.existeNombrePersona(controlador.getUsername());
+
+				if (!PersonaMensaje) {
+					model.addAttribute("error", "El nombre de la persona introducida no existe");
+					return "CrearMensaje";
+				} else {
+					Mensaje m = new Mensaje();
+					Persona p = new Persona();
+					Ejemplar ej = new Ejemplar();
+
+					m.setPersona(p);
+					m.setEjemplar(ej);
+
+					LocalDate fecha = LocalDate.now();
+
+					fechahora = Date.valueOf(fecha);
+					m.setFechahora(fechahora);
+					m.setMensaje(mensaje);
+
+					servMensaje.insertar(m);
+				}
+
+			}
+
 		}
-
-		Ejemplar ej = servEjemplar.buscarPorId(ejemplarId);
-		if (ej == null) {
-			model.addAttribute("error", "No existe el ejemplar");
-			return "CrearMensaje";
-		}
-
-		Persona p = servPersona.buscarPorNombre(controlador.getUsername());
-
-		m.setPersona(p);
-		m.setEjemplar(ej);
-		m.setFechahora(fechahora);
-		m.setMensaje(mensaje);
-
-		servMensaje.insertar(m);
 
 		return "CrearMensaje";
 	}
