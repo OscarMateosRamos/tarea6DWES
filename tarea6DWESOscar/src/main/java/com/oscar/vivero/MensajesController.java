@@ -36,56 +36,45 @@ public class MensajesController {
 
 	@PostMapping("/CamposMensaje")
 	public String InsertarMensaje(@ModelAttribute Mensaje CrearMensaje, Model model) {
-		Date fechahora = CrearMensaje.getFechahora();
-		String mensaje = CrearMensaje.getMensaje();
+
+		if (CrearMensaje.getEjemplar() == null || CrearMensaje.getEjemplar().getId() == 0) {
+			model.addAttribute("error", "Debe seleccionar un ejemplar.");
+			return "CrearMensaje";
+		}
+
 		Long idEjemplar = CrearMensaje.getEjemplar().getId();
 
-		if (!servEjemplar.existeNombreEjemplar(mensaje)) {
-			model.addAttribute("error", "El nombre de ejemplar introducido no existe.");
+		if (!servEjemplar.existeIdEjemplar(idEjemplar)) {
+			model.addAttribute("error", "No existe el idEjemplar: " + idEjemplar);
 			return "CrearMensaje";
-		} else {
-			boolean existeidEjemplar = servEjemplar.existeIdEjemplar(idEjemplar);
-
-			if (!existeidEjemplar) {
-				model.addAttribute("error", "El id de ejemplar introducido no existe ");
-				return "CrearMensaje";
-			} else {
-
-				boolean PersonaMensaje = servPersona.existeNombrePersona(controlador.getUsername());
-
-				if (!PersonaMensaje) {
-					model.addAttribute("error", "El nombre de la persona introducida no existe");
-					return "CrearMensaje";
-				} else {
-					Mensaje m = new Mensaje();
-					Persona p = new Persona();
-					Ejemplar ej = new Ejemplar();
-
-					m.setPersona(p);
-					m.setEjemplar(ej);
-
-					LocalDate fecha = LocalDate.now();
-
-					fechahora = Date.valueOf(fecha);
-					m.setFechahora(fechahora);
-					m.setMensaje(mensaje);
-
-					servMensaje.insertar(m);
-				}
-
-			}
-
 		}
+
+		Mensaje m = new Mensaje();
+		Persona p = servPersona.buscarPorNombre(controlador.getUsername());
+
+		Ejemplar ej = servEjemplar.buscarPorId(idEjemplar);
+
+		m.setEjemplar(ej);
+		m.setFechahora(CrearMensaje.getFechahora());
+		m.setMensaje(CrearMensaje.getMensaje());
+		m.setPersona(p);
+
+		servMensaje.insertar(m);
 
 		return "CrearMensaje";
 	}
 
-	@GetMapping("/CrearMensajes")
+	@GetMapping("/mostrarCrearMensajes")
 	public String mostrarCrearMensajeFormulario(Model model) {
+
 		model.addAttribute("mensaje", new Mensaje());
+
 		List<Ejemplar> ejemplares = servEjemplar.vertodosEjemplares();
+
 		model.addAttribute("ejemplares", ejemplares);
-		return "crearMensaje";
+		model.addAttribute("ejemplar", new Ejemplar());
+
+		return "CrearMensaje";
 	}
 
 }

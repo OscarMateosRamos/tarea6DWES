@@ -10,21 +10,29 @@
 
 <h2>Creación de Mensajes</h2>
 
-<form action="/CamposMensaje" method="post" th:action="@{/CamposMensaje}" th:object="${mensaje}">
+<form method="post" th:action="@{/CamposMensaje}" th:object="${mensaje}">
    
     <label for="fechahora">Fecha y Hora:</label>
     <input type="datetime-local" id="fechahora" name="fechahora" th:value="*{fechahora}" required>
     <br><br>
 
-   <label for="mensaje">Mensaje:</label>
-	<textarea id="mensaje" name="mensaje" rows="4" cols="50" th:text="*{mensaje}" required></textarea>
-	<br><br>
+    <label for="mensaje">Mensaje:</label>
+    <textarea id="mensaje" name="mensaje" rows="4" cols="50" th:text="*{mensaje}" required></textarea>
+    <br><br>
 
     <label for="ejemplar">Ejemplar (ID):</label>
-    <input type="number" id="ejemplar" name="ejemplar.id" th:field="*{ejemplar.id}" placeholder="Ingresa el ID del ejemplar" required min="1">
-   
-   
+   	
+   	<select id="ejemplar" name="ejemplar.id" th:field="*{ejemplar.id}" required>
+    <option value="" disabled selected>Selecciona un ejemplar</option>
+    <option th:each="ejemplar : ${ejemplares}" 
+            th:value="${ejemplar.id}" 
+            th:text="${ejemplar.nombre}">
+    </option>
+</select>
+   	
+    
     <br><br>
+   
     <button type="submit" class="boton">Crear Mensaje</button>
     <br><br>
     <div class="contenedor-boton">

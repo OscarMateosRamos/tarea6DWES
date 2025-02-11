@@ -33,7 +33,7 @@ public class Ejemplar implements Serializable {
 	private Planta planta;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idejemplar")
+	@JoinColumn(name = "idmensaje")
 	private List<Mensaje> mensajes;
 
 	public Ejemplar() {

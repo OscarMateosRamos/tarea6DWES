@@ -1,5 +1,8 @@
 package com.oscar.vivero;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.oscar.vivero.modelo.Ejemplar;
+import com.oscar.vivero.modelo.Mensaje;
 import com.oscar.vivero.modelo.Planta;
 import com.oscar.vivero.repositories.EjemplarRepository;
 import com.oscar.vivero.servicios.Controlador;
@@ -22,47 +26,66 @@ public class EjemplarController {
 	@Autowired
 	EjemplarRepository ejemplarrepo;
 
+	@Autowired
 	ServiciosPersona servPersona;
-
+	@Autowired
 	ServiciosMensaje servMensaje;
-
+	@Autowired
 	ServiciosEjemplar servEjemplar;
-
+	@Autowired
 	ServiciosPlanta servPlanta;
-
+	@Autowired
 	Controlador controlador;
 
 	@PostMapping("/CamposEjemplar")
 	public String InsertarEjemplar(@ModelAttribute Ejemplar CrearEjemplar, Model model) {
 
-		String codigo = CrearEjemplar.getPlanta().getCodigo().trim().toUpperCase();
+		String codigoPlanta = CrearEjemplar.getPlanta().getCodigo();
 
-		if (servPlanta.existeCodigoPlanta(codigo)) {
+		if (servPlanta.existeCodigoPlanta(codigoPlanta)) {
 
-			Planta planta = (Planta) servPlanta.encontrarPlantasPorCodigo(codigo);
+			Ejemplar ej = new Ejemplar();
 
-			CrearEjemplar.setPlanta(planta);
-			CrearEjemplar.setNombre(planta.getCodigo());
-
-			try {
-
-				servEjemplar.insertarEjemplar(CrearEjemplar);
-				model.addAttribute("success", "Ejemplar creado ");
-				return "CrearEjemplar";
-			} catch (Exception e) {
-				model.addAttribute("error", "Error al crear el ejemplar: " + e.getMessage());
+			List<Planta> plantas = servPlanta.encontrarPlantasPorCodigo(codigoPlanta);
+			if (!plantas.isEmpty()) {
+				ej.setPlanta(plantas.get(0));
+			} else {
+				model.addAttribute("error", "La planta con el nombre " + codigoPlanta + " no fue encontrada.");
 				return "CrearEjemplar";
 			}
-		} else {
 
+			ej.setNombre(codigoPlanta);
+
+			Mensaje mensaje = new Mensaje();
+			mensaje.setMensaje("Ejemplar: " + ej.getNombre() + " creado con éxito");
+
+			Mensaje m = new Mensaje();
+			m.setMensaje("Ejemplar: " + ej.getNombre() + " creado con éxito");
+
+			if (ej.getMensajes() == null) {
+				ej.setMensajes(new ArrayList<>());
+			}
+
+			servMensaje.insertar(m);
+
+			servEjemplar.insertarEjemplar(ej);
+
+			return "CrearEjemplar";
+		} else {
 			model.addAttribute("error", "No existe el código de la planta.");
 			return "CrearEjemplar";
 		}
 	}
 
-	@GetMapping("/CrearEjemplar")
+	@GetMapping("/mostrarCrearEjemplar")
 	public String mostrarCrearEjemplarFormulario(Model model) {
-		model.addAttribute("ejemplar", new Ejemplar());
+
+		List<Ejemplar> ejemplares = servEjemplar.vertodosEjemplares();
+		model.addAttribute("ejemplares", ejemplares);
+
+		Ejemplar ejemplar = new Ejemplar();
+		model.addAttribute("ejemplar", ejemplar);
+
 		return "CrearEjemplar";
 	}
 
