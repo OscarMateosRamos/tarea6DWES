@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oscar.vivero.modelo.Ejemplar;
 import com.oscar.vivero.modelo.Mensaje;
@@ -87,6 +88,26 @@ public class EjemplarController {
 		model.addAttribute("ejemplar", ejemplar);
 
 		return "CrearEjemplar";
+	}
+
+	@GetMapping("/ejemplaresTipoPlanta")
+	public String listarEjemplaresTipoPlanta(@RequestParam(required = false) String codigo, Model model) {
+
+		List<Ejemplar> ejemplares;
+
+		if (codigo != null && !codigo.isEmpty()) {
+			ejemplares = servEjemplar.listaejemplaresPorTipoPlanta(codigo);
+		} else {
+			ejemplares = servEjemplar.vertodosEjemplares();
+		}
+
+		List<Planta> plantas = servPlanta.vertodasPlantas();
+
+		model.addAttribute("plantas", plantas); 
+		model.addAttribute("ejemplares", ejemplares);
+		model.addAttribute("codigoPlantaSeleccionado", codigo);
+
+		return "listadoEjemplaresTipoPlanta";
 	}
 
 }
