@@ -108,8 +108,8 @@ public class Mensaje {
 
 	@Override
 	public String toString() {
-		return "Mensaje [id=" + id + ", fechahora=" + fechahora + ", mensaje=" + mensaje + ", ejemplar=" + ejemplar
-				+ ", persona=" + persona + "]";
+		return "Mensaje [id=" + id + ", fechahora=" + fechahora + ", mensaje=" + mensaje + ", ejemplar=" + ejemplar.getId()
+				+ ", persona=" + persona.getId() + "]";
 	}
 
 }

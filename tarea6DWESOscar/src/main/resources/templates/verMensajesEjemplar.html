@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./CSS/estiloslistadoEjemplaresTipoPlanta.css">
-    <title>Listado de Ejemplares por Tipo de Planta</title>
+    <title>ver mensajes del ejemplar</title>
 </head>
 <body>
     
     <header>
-        <h1>Listado de Ejemplares por Tipo de Planta</h1>
+        <h1>Ver Mensajes del Ejemplar</h1>
     </header>
 
     <div class="container">
@@ -18,7 +18,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Planta</th>
+                    <th>Mensaje</th>
     
                  
                 </tr>
@@ -27,7 +27,7 @@
                 <tr th:each="ejemplar : ${ejemplares}">
                     <td th:text="${ejemplar.id}"></td>            
                     <td th:text="${ejemplar.nombre}"></td>
-                    <td th:text="${ejemplar.planta.codigo}"></td>                                    
+                    <td th:text="${ejemplar.mensaje}"></td>                                    
                 </tr>
             </tbody>
         </table>
