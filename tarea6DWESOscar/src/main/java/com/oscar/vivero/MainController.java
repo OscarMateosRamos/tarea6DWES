@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.oscar.vivero.modelo.Credenciales;
+import com.oscar.vivero.servicios.Controlador;
 import com.oscar.vivero.servicios.ServiciosCredenciales;
 
 @Controller
 public class MainController {
 	@Autowired
 	ServiciosCredenciales servCredenciales;
+
+	@Autowired
+	Controlador controlador;
 
 	@GetMapping({ "/", "MenuInvitado" })
 	public String MenuInvitado() {
@@ -66,11 +70,13 @@ public class MainController {
 
 		if (usuario.equals("admin") && password.equals("admin")) {
 			System.out.println("--Bienvenido Admin--");
+			controlador.setUsername(usuario);
 			return "/MenuAdmin";
 		}
 
 		if (usuario.equals(usuario) && password.equals(password)) {
 			System.out.println("--Bienvenido--" + usuario);
+			controlador.setUsername(usuario);
 			return "/MenuPersonal";
 		}
 		return "MenuInvitado";

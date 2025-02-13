@@ -3,42 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/CSS/estilosCrearMensaje.css">
+    <link rel="stylesheet" href="/CSS/estilosGestiondeMensajes.css">
     <title>Creación de Mensajes</title>
 </head>
 <body>
 
 <h2>Creación de Mensajes</h2>
 
-<form method="post" th:action="@{/CamposMensaje}" th:object="${mensaje}">
-   
+<form th:action="@{/CamposMensaje}" method="post">
     <label for="fechahora">Fecha y Hora:</label>
-    <input type="datetime-local" id="fechahora" name="fechahora" th:value="*{fechahora}" required>
-    <br><br>
-
-    <label for="mensaje">Mensaje:</label>
-    <textarea id="mensaje" name="mensaje" rows="4" cols="50" th:text="*{mensaje}" required></textarea>
-    <br><br>
-
-    <label for="ejemplar">Ejemplar (ID):</label>
-   	
-   	<select id="ejemplar" name="ejemplar.id" th:field="*{ejemplar.id}" required>
-    <option value="" disabled selected>Selecciona un ejemplar</option>
-    <option th:each="ejemplar : ${ejemplares}" 
-            th:value="${ejemplar.id}" 
-            th:text="${ejemplar.nombre}">
-    </option>
-</select>
-   	
-    
-    <br><br>
-   
-    <button type="submit" class="boton">Crear Mensaje</button>
-    <br><br>
-    <div class="contenedor-boton">
+    <input type="date" id="fechahora" name="fechahora" required>
+     <label for="mensaje">Mensaje:</label>
+     <textarea id="mensaje" rows="4" name="mensaje" required></textarea>
+     <label for="ejemplar">Ejemplar (ID):</label>
+     <select id="id" name="id" required>
+         <option value="">Selecciona un ejemplar</option>
+         <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.id} + ' - ' + ${ejemplar.nombre}"></option>
+     </select>
+     <button class="boton" type="submit">Crear Mensaje</button>
+     <br><br>
+      <div class="contenedor-boton">
         <a href="/GestiondeMensajes" class="boton">Volver a Gestión de Mensajes</a>
     </div>
-</form>
+  </form>
 
 </body>
 </html>

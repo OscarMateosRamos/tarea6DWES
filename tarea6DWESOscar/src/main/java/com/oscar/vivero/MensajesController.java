@@ -1,15 +1,14 @@
 package com.oscar.vivero;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oscar.vivero.modelo.Ejemplar;
 import com.oscar.vivero.modelo.Mensaje;
@@ -35,28 +34,28 @@ public class MensajesController {
 	Controlador controlador;
 
 	@PostMapping("/CamposMensaje")
-	public String InsertarMensaje(@ModelAttribute Mensaje CrearMensaje, Model model) {
+	public String InsertarMensaje(@RequestParam Long id, @RequestParam String mensaje, @RequestParam String fechahora, Model model) {
 
-		if (CrearMensaje.getEjemplar() == null || CrearMensaje.getEjemplar().getId() == 0) {
+		if (id == null || id == 0) {
 			model.addAttribute("error", "Debe seleccionar un ejemplar.");
 			return "CrearMensaje";
 		}
-
-		Long idEjemplar = CrearMensaje.getEjemplar().getId();
-
-		if (!servEjemplar.existeIdEjemplar(idEjemplar)) {
-			model.addAttribute("error", "No existe el idEjemplar: " + idEjemplar);
+		
+		if (!servEjemplar.existeIdEjemplar(id)) {
+			model.addAttribute("error", "No existe el idEjemplar: " + id);
 			return "CrearMensaje";
 		}
 
-		Mensaje m = new Mensaje();
 		Persona p = servPersona.buscarPorNombre(controlador.getUsername());
-
-		Ejemplar ej = servEjemplar.buscarPorId(idEjemplar);
-
+		Ejemplar ej = servEjemplar.buscarPorId(id);
+		
+		Date fechaHoraDate;
+		fechaHoraDate = Date.valueOf(fechahora); 
+		
+		Mensaje m = new Mensaje();
+		m.setFechahora(fechaHoraDate);
+		m.setMensaje(mensaje);
 		m.setEjemplar(ej);
-		m.setFechahora(CrearMensaje.getFechahora());
-		m.setMensaje(CrearMensaje.getMensaje());
 		m.setPersona(p);
 
 		servMensaje.insertar(m);
@@ -72,9 +71,9 @@ public class MensajesController {
 		List<Ejemplar> ejemplares = servEjemplar.vertodosEjemplares();
 
 		model.addAttribute("ejemplares", ejemplares);
-		model.addAttribute("ejemplar", new Ejemplar());
 
 		return "CrearMensaje";
+
 	}
 
 }
