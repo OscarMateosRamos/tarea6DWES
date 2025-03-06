@@ -38,13 +38,14 @@ public class ServiciosMensaje {
 		}
 	}
 
-	public void verTodosMensajes() {
+	public List<Mensaje> verTodosMensajes() {
 		List<Mensaje> mensajes = mensajerepo.findAll();
 
 		for (Mensaje m : mensajes) {
 			System.out.println("Id: " + m.getId() + " fecha: " + m.getFechahora() + " Mensaje : " + m.getMensaje()
 					+ " Ejemplar: " + m.getEjemplar().getNombre() + " CREADO POR: " + m.getPersona().getNombre());
 		}
+		return mensajes;
 
 	}
 

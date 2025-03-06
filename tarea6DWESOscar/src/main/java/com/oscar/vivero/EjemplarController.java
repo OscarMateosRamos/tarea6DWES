@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -60,14 +61,14 @@ public class EjemplarController {
 			Mensaje mensaje = new Mensaje();
 			mensaje.setMensaje("Ejemplar: " + ej.getNombre() + " creado con éxito");
 
-			Mensaje m = new Mensaje();
-			m.setMensaje("Ejemplar: " + ej.getNombre() + " creado con éxito");
+//			Mensaje m = new Mensaje();
+//			m.setMensaje("Ejemplar: " + ej.getNombre() + " creado con éxito");
 
 			if (ej.getMensajes() == null) {
 				ej.setMensajes(new ArrayList<>());
 			}
 
-			servMensaje.insertar(m);
+			//servMensaje.insertar(m);
 
 			servEjemplar.insertarEjemplar(ej);
 
@@ -103,11 +104,29 @@ public class EjemplarController {
 
 		List<Planta> plantas = servPlanta.vertodasPlantas();
 
-		model.addAttribute("plantas", plantas); 
+		model.addAttribute("plantas", plantas);
 		model.addAttribute("ejemplares", ejemplares);
 		model.addAttribute("codigoPlantaSeleccionado", codigo);
 
 		return "listadoEjemplaresTipoPlanta";
+	}
+
+	@GetMapping("/verMensajesEjemplar")
+	public String verMensajesDeEjemplar(@PathVariable Long id, Model model) {
+
+		Ejemplar ejemplar = servEjemplar.buscarPorId(id);
+
+		if (ejemplar == null) {
+			model.addAttribute("error", "Ejemplar no encontrado");
+			return "error";
+		}
+
+		List<Mensaje> mensajes = ejemplar.getMensajes();
+
+		model.addAttribute("ejemplar", ejemplar);
+		model.addAttribute("mensajes", mensajes);
+
+		return "verMensajesEjemplar";
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.oscar.vivero.modelo.Ejemplar;
 import com.oscar.vivero.modelo.Mensaje;
 import com.oscar.vivero.modelo.Persona;
+import com.oscar.vivero.modelo.Planta;
 import com.oscar.vivero.servicios.Controlador;
 import com.oscar.vivero.servicios.ServiciosEjemplar;
 import com.oscar.vivero.servicios.ServiciosMensaje;
@@ -34,13 +35,14 @@ public class MensajesController {
 	Controlador controlador;
 
 	@PostMapping("/CamposMensaje")
-	public String InsertarMensaje(@RequestParam Long id, @RequestParam String mensaje, @RequestParam String fechahora, Model model) {
+	public String InsertarMensaje(@RequestParam Long id, @RequestParam String mensaje, @RequestParam String fechahora,
+			Model model) {
 
 		if (id == null || id == 0) {
 			model.addAttribute("error", "Debe seleccionar un ejemplar.");
 			return "CrearMensaje";
 		}
-		
+
 		if (!servEjemplar.existeIdEjemplar(id)) {
 			model.addAttribute("error", "No existe el idEjemplar: " + id);
 			return "CrearMensaje";
@@ -48,10 +50,10 @@ public class MensajesController {
 
 		Persona p = servPersona.buscarPorNombre(controlador.getUsername());
 		Ejemplar ej = servEjemplar.buscarPorId(id);
-		
+
 		Date fechaHoraDate;
-		fechaHoraDate = Date.valueOf(fechahora); 
-		
+		fechaHoraDate = Date.valueOf(fechahora);
+
 		Mensaje m = new Mensaje();
 		m.setFechahora(fechaHoraDate);
 		m.setMensaje(mensaje);
@@ -74,6 +76,13 @@ public class MensajesController {
 
 		return "CrearMensaje";
 
+	}
+
+	@GetMapping("/mensajes")
+	public String listarMensajes(Model model) {
+		List<Mensaje> m = servMensaje.verTodosMensajes();
+		model.addAttribute("mensajes", m);
+		return "listadodeMensajes";
 	}
 
 }
