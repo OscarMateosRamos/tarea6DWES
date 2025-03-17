@@ -1,3 +1,4 @@
+/* Estilo general para html y body */
 html, body {
     height: 100%;
     margin: 0;
@@ -9,15 +10,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
     background-color: #f4f4f4;
-    background-image: url(../Imagenes/crocus-2107024_1280.jpg);
+    background-image: url(../Imagenes/crocus-2107024_1280.jpg);  /* Reemplazar con la URL correcta de tu imagen */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 100vh;
 }
 
+/* Header */
 header {
     background-color: #333;
     color: white;
@@ -31,19 +33,21 @@ header {
     right: 0;
 }
 
+/* Contenedor principal */
 .container {
     text-align: center;
     margin-top: 150px;
     width: 60%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8); 
     padding: 30px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
     justify-content: center; 
 }
 
+/* Formulario */
 .formulario {
     display: flex;
     flex-direction: column;
@@ -52,11 +56,13 @@ header {
     width: 100%; 
 }
 
+/* Estilo para las etiquetas */
 label {
     font-size: 18px;
     color: #333;
 }
 
+/* Estilo para los campos de texto */
 input[type="text"] {
     width: 80%; 
     padding: 10px;
@@ -66,6 +72,7 @@ input[type="text"] {
     box-sizing: border-box;
 }
 
+/* Botón de envío */
 .boton {
     display: inline-block;
     padding: 10px 20px;
@@ -77,9 +84,50 @@ input[type="text"] {
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
+    margin: 30px;
 }
 
 .boton:hover {
     background-color: #444;
     transform: scale(1.05);
+}
+
+/* Contenedor para los botones */
+.contenedor-boton {
+    display: flex;  
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;  
+    background-color: transparent; 
+    gap: 30px;
+}
+
+/* Estilo del botón dentro del contenedor */
+.contenedor-boton .boton {
+    background-color: #007bff;  /* Color primario del botón */
+    padding: 12px 20px;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.contenedor-boton .boton:hover {
+    background-color: #0056b3;  /* Cambio de color al pasar el ratón */
+    transform: scale(1.05);  /* Efecto de escala */
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;  /* Ajustar contenedor a pantallas más pequeñas */
+        margin-top: 100px;  /* Ajuste en el margen superior */
+    }
+
+    .formulario input[type="text"] {
+        width: 90%;  /* Asegura que los inputs sean un poco más grandes en pantallas pequeñas */
+    }
+
+    .boton {
+        padding: 8px 16px;  /* Botones más pequeños en pantallas pequeñas */
+        font-size: 14px;  /* Tamaño de fuente más pequeño */
+    }
 }

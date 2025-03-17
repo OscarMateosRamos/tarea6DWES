@@ -28,21 +28,13 @@ public class ServiciosCredenciales {
 	}
 
 	public boolean validarUsuarioPassword(Credenciales c) {
+		if (c.getUsuario().isEmpty() || c.getPassword().isEmpty() || c.getUsuario().contains(" ")
+				|| c.getPassword().contains(" ")) {
 
-		if (c.getUsuario().isEmpty()) {
-			return false;
-		}
-
-		if (c.getPassword().isEmpty()) {
 			return false;
 		}
 		String regpassword = "^([A-Za-z0-9_!?¿+-]){3,}$";
-
-		if (!c.getPassword().matches(regpassword)) {
-			System.out.println("Formato no ivalido");
-			return false;
-		}
-		return true;
+		return c.getPassword().matches(regpassword);
 	}
 
 	public void insertarCredencial(Credenciales c) {

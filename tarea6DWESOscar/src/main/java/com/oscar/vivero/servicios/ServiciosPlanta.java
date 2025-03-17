@@ -24,6 +24,10 @@ public class ServiciosPlanta {
 			return false;
 		}
 
+		if (pl.getCodigo().contains(" ")) {
+			return false;
+		}
+
 		if (!plantarepo.findByCodigo(pl.getCodigo()).isEmpty()) {
 			System.out.println("El código ya existe....");
 			return false;
@@ -91,6 +95,16 @@ public class ServiciosPlanta {
 		}
 
 		return pl;
+	}
+
+	public boolean validarPlantaSinCodigo(Planta planta) {
+		if (planta.getNombrecomun() == null || planta.getNombrecomun().isEmpty()) {
+			return false;
+		}
+		if (planta.getNombrecientifico() == null || planta.getNombrecientifico().isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 
 }

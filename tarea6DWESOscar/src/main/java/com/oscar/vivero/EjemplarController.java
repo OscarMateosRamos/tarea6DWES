@@ -22,6 +22,8 @@ import com.oscar.vivero.servicios.ServiciosMensaje;
 import com.oscar.vivero.servicios.ServiciosPersona;
 import com.oscar.vivero.servicios.ServiciosPlanta;
 
+import jakarta.transaction.Transactional;
+
 @Controller
 public class EjemplarController {
 
@@ -93,38 +95,48 @@ public class EjemplarController {
 
 	@GetMapping("/ejemplaresTipoPlanta")
 	public String listarEjemplaresTipoPlanta(@RequestParam(required = false) String codigo, Model model) {
+		List<Planta> plantas = servPlanta.vertodasPlantas();
+		model.addAttribute("plantas", plantas);
 
 		List<Ejemplar> ejemplares;
-
 		if (codigo != null && !codigo.isEmpty()) {
 			ejemplares = servEjemplar.listaejemplaresPorTipoPlanta(codigo);
 		} else {
 			ejemplares = servEjemplar.vertodosEjemplares();
 		}
 
-		List<Planta> plantas = servPlanta.vertodasPlantas();
-
-		model.addAttribute("plantas", plantas);
 		model.addAttribute("ejemplares", ejemplares);
-		model.addAttribute("codigoPlantaSeleccionado", codigo);
+		model.addAttribute("codigoPlanta", codigo);
 
 		return "listadoEjemplaresTipoPlanta";
 	}
 
 	@GetMapping("/verMensajesEjemplar")
-	public String verMensajesDeEjemplar(@PathVariable Long id, Model model) {
+	@Transactional
+	public String verMensajesDelEjemplar(@RequestParam(required = false) Long ejemplarId, Model model) {
 
-		Ejemplar ejemplar = servEjemplar.buscarPorId(id);
+		List<Ejemplar> ejemplares = servEjemplar.vertodosEjemplares();
+		model.addAttribute("ejemplares", ejemplares);
 
-		if (ejemplar == null) {
-			model.addAttribute("error", "Ejemplar no encontrado");
-			return "error";
+		if (ejemplarId != null) {
+			Ejemplar ejemplar = servEjemplar.buscarPorId(ejemplarId);
+
+			if (ejemplar == null) {
+				model.addAttribute("error", "Ejemplar no encontrado");
+			} else {
+				List<Mensaje> mensajes = ejemplar.getMensajes();
+				if (mensajes.isEmpty()) {
+					model.addAttribute("mensajeError", "Este ejemplar no tiene mensajes.");
+				} else {
+					model.addAttribute("mensajes", mensajes);
+				}
+				model.addAttribute("ejemplar", ejemplar);
+			}
+		} else {
+
+			List<Mensaje> todosLosMensajes = servMensaje.verTodosMensajes();
+			model.addAttribute("mensajes", todosLosMensajes);
 		}
-
-		List<Mensaje> mensajes = ejemplar.getMensajes();
-
-		model.addAttribute("ejemplar", ejemplar);
-		model.addAttribute("mensajes", mensajes);
 
 		return "verMensajesEjemplar";
 	}
