@@ -3,6 +3,7 @@ package com.oscar.vivero.servicios;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.oscar.vivero.modelo.Planta;
@@ -106,5 +107,18 @@ public class ServiciosPlanta {
 		}
 		return true;
 	}
+
+	 public List<String> listarTiposDePlanta() {
+	        try {
+	           
+	            return plantarepo.findDistinctTiposDePlanta();
+	        } catch (DataAccessException e) {
+	          
+	            throw new RuntimeException("Error al obtener los tipos de planta desde la base de datos", e);
+	        } catch (Exception e) {
+	
+	            throw new RuntimeException("Error al obtener los tipos de planta", e);
+	        }
+	    }
 
 }

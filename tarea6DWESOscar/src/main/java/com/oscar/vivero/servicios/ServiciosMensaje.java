@@ -1,5 +1,6 @@
 package com.oscar.vivero.servicios;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.oscar.vivero.modelo.Mensaje;
 import com.oscar.vivero.repositories.MensajeRepository;
@@ -65,6 +67,13 @@ public class ServiciosMensaje {
 		List<Mensaje> mensajes = mensajerepo.mensajesPorCodigoPlanta(codigo);
 		return mensajes;
 
+	}
+	
+
+	@Transactional
+	public List<Mensaje> verMensajesRangoFechas(Date fechaInicio, Date fechaFin) {
+
+		return mensajerepo.findByFechahoraBetween(fechaInicio, fechaFin);
 	}
 
 //	public List<Mensaje> listamensajesPorFechas(String fechaInicial, String fechaFinal) {

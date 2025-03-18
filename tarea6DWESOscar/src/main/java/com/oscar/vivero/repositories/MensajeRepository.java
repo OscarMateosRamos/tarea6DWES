@@ -1,5 +1,6 @@
 package com.oscar.vivero.repositories;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,8 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
 
 	@Query("SELECT m FROM Mensaje m WHERE m.ejemplar.planta.codigo=:codigo ORDER BY ejemplar")
 	List<Mensaje> mensajesPorCodigoPlanta(String codigo);
+
+	List<Mensaje> findByFechahoraBetween(Date fechaInicio, Date fechaFin);
 
 //	@Query("SELECT m FROM Mensaje m WHERE m.fechahora BETWEEN fechaInicial and fechaFinal")
 //	List<Mensaje> mensajesPorFechas(String fechaInicial, String fechaFinal);

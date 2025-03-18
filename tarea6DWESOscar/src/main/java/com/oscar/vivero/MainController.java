@@ -35,6 +35,13 @@ public class MainController {
 	public String mostarMenuAdmin() {
 		return "MenuAdmin";
 	}
+	
+	
+	@GetMapping("/MenuFiltradoMensajes")
+	public String mostarMenuFiltarMensajes() {
+		return "MenuFiltradoMensajes";
+	}
+
 
 	@GetMapping("/Sesion")
 	public String logIn(Model model) {
